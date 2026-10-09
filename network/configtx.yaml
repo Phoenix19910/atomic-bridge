@@ -1,0 +1,253 @@
+# Copyright AtomicBridge Consortium
+# Channel Configuration for corridor-channel
+
+---
+Organizations:
+  - &OrdererOrg
+    Name: OrdererOrg
+    ID: OrdererMSP
+    MSPDir: organizations/ordererOrganizations/corridor.example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('OrdererMSP.member')"
+      Writers:
+        Type: Signature
+        Rule: "OR('OrdererMSP.member')"
+      Admins:
+        Type: Signature
+        Rule: "OR('OrdererMSP.admin')"
+    OrdererEndpoints:
+      - orderer.corridor.example.com:10050
+
+  - &BankA
+    Name: BankA
+    ID: BankA-MSP
+    MSPDir: organizations/peerOrganizations/banka.india/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('BankA-MSP.admin', 'BankA-MSP.peer', 'BankA-MSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('BankA-MSP.admin', 'BankA-MSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('BankA-MSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('BankA-MSP.peer')"
+    AnchorPeers:
+      - Host: peer0.banka.india
+        Port: 10051
+
+  - &RBI
+    Name: RBI
+    ID: RBI-MSP
+    MSPDir: organizations/peerOrganizations/rbi.india/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('RBI-MSP.admin', 'RBI-MSP.peer', 'RBI-MSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('RBI-MSP.admin', 'RBI-MSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('RBI-MSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('RBI-MSP.peer')"
+    AnchorPeers:
+      - Host: peer0.rbi.india
+        Port: 10052
+
+  - &BankC
+    Name: BankC
+    ID: BankC-MSP
+    MSPDir: organizations/peerOrganizations/bankc.singapore/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('BankC-MSP.admin', 'BankC-MSP.peer', 'BankC-MSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('BankC-MSP.admin', 'BankC-MSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('BankC-MSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('BankC-MSP.peer')"
+    AnchorPeers:
+      - Host: peer0.bankc.singapore
+        Port: 12051
+
+  - &MAS
+    Name: MAS
+    ID: MAS-MSP
+    MSPDir: organizations/peerOrganizations/mas.singapore/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('MAS-MSP.admin', 'MAS-MSP.peer', 'MAS-MSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('MAS-MSP.admin', 'MAS-MSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('MAS-MSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('MAS-MSP.peer')"
+    AnchorPeers:
+      - Host: peer0.mas.singapore
+        Port: 12052
+
+  - &BankB
+    Name: BankB
+    ID: BankB-MSP
+    MSPDir: organizations/peerOrganizations/bankb.india/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('BankB-MSP.admin', 'BankB-MSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('BankB-MSP.admin', 'BankB-MSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('BankB-MSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('BankB-MSP.admin', 'BankB-MSP.client')"
+
+  - &BankD
+    Name: BankD
+    ID: BankD-MSP
+    MSPDir: organizations/peerOrganizations/bankd.singapore/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('BankD-MSP.admin', 'BankD-MSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('BankD-MSP.admin', 'BankD-MSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('BankD-MSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('BankD-MSP.admin', 'BankD-MSP.client')"
+
+  - &Auditor
+    Name: Auditor
+    ID: Auditor-MSP
+    MSPDir: organizations/peerOrganizations/auditor.consortium/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('Auditor-MSP.admin', 'Auditor-MSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('Auditor-MSP.admin', 'Auditor-MSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('Auditor-MSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('Auditor-MSP.admin', 'Auditor-MSP.client')"
+
+Capabilities:
+  Channel: &ChannelCapabilities
+    V2_0: true
+  Orderer: &OrdererCapabilities
+    V2_0: true
+  Application: &ApplicationCapabilities
+    V2_5: true
+
+Application: &ApplicationDefaults
+  Organizations:
+  Policies:
+    LifecycleEndorsement:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Endorsement"
+    Endorsement:
+      Type: Signature
+      Rule: "OR('BankA-MSP.peer', 'BankC-MSP.peer', 'RBI-MSP.peer', 'MAS-MSP.peer')"
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+  Capabilities:
+    <<: *ApplicationCapabilities
+
+Orderer: &OrdererDefaults
+  OrdererType: etcdraft
+  Addresses:
+    - orderer.corridor.example.com:10050
+  BatchTimeout: 2s
+  BatchSize:
+    MaxMessageCount: 50
+    AbsoluteMaxBytes: 10 MB
+    PreferredMaxBytes: 2 MB
+  Organizations:
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+    BlockValidation:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+
+Channel: &ChannelDefaults
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+  Capabilities:
+    <<: *ChannelCapabilities
+
+Profiles:
+  CorridorChannel:
+    <<: *ChannelDefaults
+    Orderer:
+      <<: *OrdererDefaults
+      OrdererType: etcdraft
+      EtcdRaft:
+        Consenters:
+          - Host: orderer.corridor.example.com
+            Port: 10050
+            ClientTLSCert: organizations/ordererOrganizations/corridor.example.com/orderers/orderer.corridor.example.com/tls/server.crt
+            ServerTLSCert: organizations/ordererOrganizations/corridor.example.com/orderers/orderer.corridor.example.com/tls/server.crt
+      Organizations:
+        - *OrdererOrg
+      Capabilities: *OrdererCapabilities
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *BankA
+        - *RBI
+        - *BankC
+        - *MAS
+        - *BankB
+        - *BankD
+        - *Auditor
+      Capabilities: *ApplicationCapabilities

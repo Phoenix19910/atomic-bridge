@@ -1,0 +1,90 @@
+# Copyright AtomicBridge Consortium
+# Crypto configuration for 4-peer corridor network + client-only orgs
+
+OrdererOrgs:
+  - Name: Orderer
+    Domain: corridor.example.com
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: orderer
+        CommonName: orderer.corridor.example.com
+        SANS:
+          - localhost
+          - 127.0.0.1
+          - orderer.corridor.example.com
+
+PeerOrgs:
+  - Name: BankA
+    Domain: banka.india
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+      SANS:
+        - localhost
+        - 127.0.0.1
+        - peer0.banka.india
+    Users:
+      Count: 2
+
+  - Name: RBI
+    Domain: rbi.india
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+      SANS:
+        - localhost
+        - 127.0.0.1
+        - peer0.rbi.india
+    Users:
+      Count: 2
+
+  - Name: BankC
+    Domain: bankc.singapore
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+      SANS:
+        - localhost
+        - 127.0.0.1
+        - peer0.bankc.singapore
+    Users:
+      Count: 2
+
+  - Name: MAS
+    Domain: mas.singapore
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+      SANS:
+        - localhost
+        - 127.0.0.1
+        - peer0.mas.singapore
+    Users:
+      Count: 2
+
+  - Name: BankB
+    Domain: bankb.india
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: client
+        CommonName: client.bankb.india
+    Users:
+      Count: 2
+
+  - Name: BankD
+    Domain: bankd.singapore
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: client
+        CommonName: client.bankd.singapore
+    Users:
+      Count: 2
+
+  - Name: Auditor
+    Domain: auditor.consortium
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: client
+        CommonName: client.auditor.consortium
+    Users:
+      Count: 2

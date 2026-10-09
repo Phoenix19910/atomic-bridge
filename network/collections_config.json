@@ -1,0 +1,11 @@
+[
+  {
+    "name": "AuditCollection",
+    "policy": "OR('RBI-MSP.member', 'MAS-MSP.member', 'Auditor-MSP.member')",
+    "requiredPeerCount": 1,
+    "maxPeerCount": 2,
+    "blockToLive": 1000000,
+    "memberOnlyRead": true,
+    "memberOnlyWrite": false
+  }
+]
