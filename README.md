@@ -2,19 +2,22 @@ AtomicBridge — Sovereign Cross-Border FX PvP Settlement Corridor
 > Enterprise-grade sovereign foreign exchange settlement infrastructure built on Hyperledger Fabric 2.5.
 > Features Payment-versus-Payment (PvP) atomic swaps across jurisdictions (India & Singapore), real-time regulatory compliance controls (RBI & MAS), and autonomous trade expiry surveillance.
 > 
-🏛️ Architecture Overview
+ 🏛️ Architecture Overview
+
 AtomicBridge interconnects commercial banking institutions and sovereign central banks across international currency corridors:
-+-------------------------------------------------------------------------------+
-|                              corridor-channel                                 |
-|                                                                               |
-|   [ BankA-MSP ] <------- Cross-Border PvP Trade ------> [ BankC-MSP ]         |
-|    (India Leg: INR)                                      (Singapore Leg: USD) |
-|          |                                                     |              |
-|          v                                                     v              |
-|   [  RBI-MSP  ]                                         [  MAS-MSP  ]         |
-|   Central Bank / Regulator                              Monetary Authority    |
-|   (Compliance & Auto-Refund)                            (FX Rate Surveillance)|
-+-------------------------------------------------------------------------------+
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              corridor-channel                               │
+│                                                                             │
+│   [ BankA-MSP ] <────── Cross-Border PvP Trade ──────> [ BankC-MSP ]        │
+│   (India: INR)                                         (Singapore: USD)     │
+│        │                                                      │             │
+│        ▼                                                      ▼             │
+│   [  RBI-MSP  ]                                        [  MAS-MSP  ]        │
+│   Reserve Bank of India                                Monetary Authority   │
+│   (Compliance & Refund)                                (FX Surveillance)    │
+└─────────────────────────────────────────────────────────────────────────────┘
 
  * Channel: corridor-channel
  * Smart Contract (Chaincode): atomicbridge (Node.js / TypeScript)
